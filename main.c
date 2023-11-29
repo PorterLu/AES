@@ -124,6 +124,8 @@ int main() {
 	
 	w = aes_init(sizeof(key));
 
+	aes_key_expansion(key, w);
+	
 	printf("Plaintext message:\n");
 	for (i = 0; i < 32; i++) {
 		printf("%02x %02x %02x %02x ", in[4*i+0], in[4*i+1], in[4*i+2], in[4*i+3]);
@@ -131,10 +133,10 @@ int main() {
 	printf("\n");
 
 	for(int i = 0; i < 30; i++) {
-		for(int j = 0; j < 8; j++) {
-			aes_key_expansion(key, w);
+		// simple ebc mode
+		for(int j = 0; j < 8; j++) 
+		{
 			aes_cipher(in + j*16/* in */, out + j*16/* out */, w /* expanded key */);
-			memcpy(key, w, sizeof(key));
 		}
 	}
 
@@ -145,7 +147,11 @@ int main() {
 
 	printf("\n");
 
-	aes_inv_cipher(out, in, w);
+	for(int i = 0; i < 30; i++) {
+		for(int j = 0; j < 8; j++) {
+			aes_inv_cipher(out + j*16, in + j*16, w);
+		}
+	}
 
 	printf("Original message (after inv cipher):\n");
 	for (i = 0; i < 32; i++) {
