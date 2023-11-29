@@ -132,7 +132,7 @@ int main() {
 	}
 	printf("\n");
 
-	for(int i = 0; i < 30; i++) {
+	for(int i = 0; i < 120; i++) {
 		// simple ebc mode
 		for(int j = 0; j < 8; j++) 
 		{
@@ -147,7 +147,7 @@ int main() {
 
 	printf("\n");
 
-	for(int i = 0; i < 30; i++) {
+	for(int i = 0; i < 120; i++) {
 		for(int j = 0; j < 8; j++) {
 			aes_inv_cipher(out + j*16, in + j*16, w);
 		}
